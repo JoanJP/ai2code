@@ -1,0 +1,8 @@
+<mvc:View controllerName="project.fiori.controller.TreeNavigation"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <VBox >
+        <mvc:XMLView viewName="project.fiori.view.Context"/>
+        <mvc:XMLView viewName="project.fiori.view.Task"/>
+    </VBox>
+</mvc:View>

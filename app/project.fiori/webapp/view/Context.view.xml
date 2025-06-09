@@ -1,0 +1,10 @@
+<mvc:View controllerName="project.fiori.controller.TreeNavigation"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Toolbar>
+        <Title text = "Context"/>
+    </Toolbar>
+    <Tree id="contextTree" items="{ path: 'contextNodes>/' }">
+        <StandardTreeItem title="{contextNodes>ID}"/>
+    </Tree>
+</mvc:View>

@@ -1,0 +1,18 @@
+<mvc:View xmlns:semantic="sap.m.semantic" controllerName="project.fiori.controller.Overview"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page id="overviewPage" title="{i18n>appTitle}" titleAlignment="Center">
+        <SplitApp >
+            <masterPages>
+                <Page title="Tree Navigation" titleAlignment="Center">
+                    <mvc:XMLView viewName="project.fiori.view.TreeNavigation"/>
+                </Page>
+            </masterPages>
+            <detailPages>
+                <Page title="Context Node" titleAlignment="Center">
+                    <mvc:XMLView viewName="project.fiori.view.ContextNodeDisplay"/>
+                </Page>
+            </detailPages>
+        </SplitApp>
+    </Page>
+</mvc:View>
