@@ -4,7 +4,7 @@
     <Toolbar>
         <Title text = "Context"/>
     </Toolbar>
-    <Tree id="contextTree" items="{ path: 'contextNodes>/' }">
-        <StandardTreeItem title="{contextNodes>ID}"/>
+    <Tree id="contextTree" items="{ path: 'tree>/nodes', parameters: { arrayNames: ['children'] } }">
+        <StandardTreeItem title="{tree>key}"/>
     </Tree>
 </mvc:View>

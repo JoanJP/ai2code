@@ -7,15 +7,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller"], (Controller) => {
       // this._loadEntityData("Tasks");
     },
     _loadEntityData(entityName) {
-      // const oUri = `http://localhost:8080/api/MainService/${entityName}?$format=JSON`;
-      // const oModel = new sap.ui.model.json.JSONModel();
-      // oModel.loadData(oUri);
-      // // Convert entityName to camelCase for the model name
-      // const modelName =
-      //   entityName.charAt(0).toLowerCase() + entityName.slice(1);
-      // this.getView().setModel(oModel, modelName);
-      // const oTest = this.getView().getModel(modelName).getData();
-      // console.log(oTest);
       const oBindList = `/${entityName}`;
       const oModel = this.getOwnerComponent().getModel();
       oModel
@@ -36,9 +27,51 @@ sap.ui.define(["sap/ui/core/mvc/Controller"], (Controller) => {
             const data = this.getOwnerComponent()
               .getModel("myJSON")
               .getData().results;
+            this._buildContextTree(data);
             console.log(data);
           }.bind(this)
         );
+    },
+    _buildContextTree: function (flatData) {
+      // Result tree
+      const treeData = {};
+
+      flatData.forEach((item) => {
+        const pathSegments = item.path.split("/").filter(Boolean); // e.g. ["documents", "section1"]
+        let current = treeData;
+
+        // Build hierarchy
+        pathSegments.forEach((segment) => {
+          if (!current[segment]) {
+            current[segment] = {};
+          }
+          current = current[segment];
+        });
+
+        // Assign label-value pair
+        current[item.label] = item.value;
+      });
+
+      console.log(treeData);
+
+      const aTree = this._prepareTreeArray(treeData);
+      const oTreeModel = new sap.ui.model.json.JSONModel({ nodes: aTree });
+      this.getOwnerComponent().setModel(oTreeModel, "tree");
+    },
+
+    _prepareTreeArray: function (oObj) {
+      return Object.keys(oObj).map((key) => {
+        const node = { key: key, children: [] };
+        const val = oObj[key];
+        if (val !== null && typeof val === "object") {
+          // object → recurse
+          node.children = this._prepareTreeArray(val);
+        } else {
+          // primitive → treat as leaf with a value
+          node.value = val;
+        }
+        return node;
+      });
     },
   });
 });
