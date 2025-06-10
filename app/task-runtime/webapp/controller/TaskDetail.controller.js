@@ -26,9 +26,9 @@ sap.ui.define(
                 .getData().results;
               this.buildContextTree(data);
 
-              //   const aTree = this._groupByPath(aData);
-              //   const oTreeModel = new JSONModel({ nodes: aTree });
-              //   this.getOwnerComponent().setModel(oTreeModel, "tree");
+              const aTree = this._groupByPath(aData);
+              const oTreeModel = new JSONModel({ nodes: aTree });
+              this.getOwnerComponent().setModel(oTreeModel, "tree");
             }.bind(this)
           );
       },
@@ -48,12 +48,9 @@ sap.ui.define(
             }
             current = current[segment];
           });
-
           // Assign label-value pair
           current[item.label] = item.value;
         });
-
-        console.log(treeData);
 
         const aTree = this.prepareTreeArray(treeData);
         const oTreeModel = new JSONModel({ nodes: aTree });
@@ -85,6 +82,7 @@ sap.ui.define(
           }
           // push each label/value as a leaf node
           map[pathKey].children.push({
+            id: item.ID,
             key: item.label,
             value: item.value,
             children: [],
@@ -103,10 +101,11 @@ sap.ui.define(
       // This is Detail page
       onContextNodesSelect: function () {
         // Get the reference to the author list control by its ID
-        const oList = this.byId("ContextNodesList");
+        const oList = this.byId("docTree");
 
         // Get the currently selected item (author) from the list
         const oContextNodeSelected = oList.getSelectedItem();
+        console.log("Hit", oContextNodeSelected);
 
         // If no author is selected, exit the function
         if (!oContextNodeSelected) {
@@ -115,9 +114,13 @@ sap.ui.define(
 
         // Retrieve the ID of the selected author from its binding context
         const sContextNodeId = oContextNodeSelected
-          .getBindingContext()
-          .getProperty("ID");
-        console.log(sContextNodeId);
+          .getBindingContext("tree")
+          .getProperty("id");
+        console.log(
+          "CONTEXT",
+          oContextNodeSelected.getBindingContext("tree").getObject()
+        );
+        console.log("Hit2", sContextNodeId);
         // Call a private function to bind and display books related to the selected author
         this._bindContextNode(sContextNodeId);
       },
@@ -130,7 +133,7 @@ sap.ui.define(
         // If no author ID is provided, unbind the table and exit
         if (!sContextNodeId) {
           oForm.setVisible(false);
-          oForm.unbindItems();
+          oForm.unbindElement();
           return;
         } else {
           oForm.setVisible(true);

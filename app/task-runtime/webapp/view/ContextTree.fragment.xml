@@ -1,27 +1,13 @@
-<core:FragmentDefinition
-    xmlns="sap.m"
-    xmlns:core="sap.ui.core"
->
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core">
     <VBox height="50%">
         <Toolbar>
             <Title text="Context Tree" />
         </Toolbar>
-        <ScrollContainer
-            height="100%"
-            vertical="true"
-            horizontal="false"
-        >
-            <Tree
-                id="docTree"
-                items="{
-          path: 'tree>/nodes',
-          parameters: {
-            arrayNames: ['children']
-          }
-        }"
-            >
+        <ScrollContainer height="100%" vertical="true" horizontal="false">
+            <Tree id="docTree" items="{ path: 'tree>/nodes', parameters: { arrayNames: ['children'] } }" itemPress=".onContextNodesSelect" mode="SingleSelectMaster">
                 <!-- each node rendered as a StandardTreeItem -->
-                <StandardTreeItem title="{tree>key}" />
+                <StandardTreeItem title="{tree>key}" type="Active"/>
             </Tree>
         </ScrollContainer>
     </VBox>
