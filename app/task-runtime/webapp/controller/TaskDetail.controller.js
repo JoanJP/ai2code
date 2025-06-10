@@ -105,7 +105,6 @@ sap.ui.define(
 
         // Get the currently selected item (author) from the list
         const oContextNodeSelected = oList.getSelectedItem();
-        console.log("Hit", oContextNodeSelected);
 
         // If no author is selected, exit the function
         if (!oContextNodeSelected) {
@@ -116,11 +115,6 @@ sap.ui.define(
         const sContextNodeId = oContextNodeSelected
           .getBindingContext("tree")
           .getProperty("id");
-        console.log(
-          "CONTEXT",
-          oContextNodeSelected.getBindingContext("tree").getObject()
-        );
-        console.log("Hit2", sContextNodeId);
         // Call a private function to bind and display books related to the selected author
         this._bindContextNode(sContextNodeId);
       },
