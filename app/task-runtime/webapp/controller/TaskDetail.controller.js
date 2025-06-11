@@ -149,18 +149,50 @@ sap.ui.define(
       // -----------------------------------------Task Tree --------------------------------------
 
       // ---------------------------------------Chat Bot -------------------------------------
-      onSubmitQuery: function () {
+      onSubmitQuery: async function () {
         var oInput = this.byId("chatInput");
         var sMessage = oInput.getValue().trim();
         if (sMessage) {
-          // Add user message
           this.addChatMessage(sMessage, "user");
-          // Clear input
           oInput.setValue("");
-          // Simulate AI response (replace with your actual AI call)
-          setTimeout(() => {
-            this.addChatMessage("AI received: " + sMessage, "ai");
-          }, 1000);
+          // this.getView().setBusy(true); // Show loading
+          this.byId("chatMessagesBox").setBusy(true); // Show loading
+          try {
+            const API_KEY = "AIzaSyDyE_D4ej7SljvLAV5vWMmkQxg5OjGv5r4";
+            const model = "gemini-2.0-flash";
+            const response = await fetch(
+              `https://generativelanguage.googleapis.com/v1beta/models/${model}:streamGenerateContent?key=${API_KEY}`,
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  contents: [
+                    {
+                      role: "user",
+                      parts: [
+                        {
+                          text: sMessage,
+                        },
+                      ],
+                    },
+                  ],
+                }),
+              }
+            );
+            console.log(response);
+            const data = await response.json();
+            console.log(data);
+            const reply =
+              data.candidates?.[0]?.content?.parts?.[0]?.text ||
+              "No response from AI.";
+            this.addChatMessage(reply, "ai");
+            this.byId("chatMessagesBox").setBusy(false); // Hide loading
+          } catch (error) {
+            this.addChatMessage("Error: " + error.message, "ai");
+            this.byId("chatMessagesBox").setBusy(false); // Hide loading
+          }
         }
       },
       addChatMessage: function (sMessage, sType) {

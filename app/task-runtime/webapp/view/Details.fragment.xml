@@ -1,8 +1,6 @@
-<core:FragmentDefinition
-    xmlns="sap.m"
+<core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core"
-    xmlns:l="sap.ui.layout"
->
+    xmlns:l="sap.ui.layout">
     <Toolbar>
         <Title text="Details" />
     </Toolbar>
@@ -10,71 +8,27 @@
     <!-- Use Flexible Box Layout for better control -->
     <l:VerticalLayout width="90%">
         <!-- Chat Section - Fixed Height -->
-        <l:VerticalLayout
-            width="100%"
-            class="topSection"
-        >
-            <Title
-                text="AI Chat"
-                level="H4"
-                class="aiChatTitle"
-            />
+        <l:VerticalLayout width="100%" class="topSection">
+            <Title text="AI Chat" level="H4" class="aiChatTitle" />
 
             <!-- Chat Messages - Scrollable Area -->
-            <ScrollContainer
-                id="chatMessagesContainer"
-                width="100%"
-                height="calc(100% - 80px)"
-                class="chatMessagesArea"
-                vertical="true"
-            >
-                <VBox
-                    id="chatMessagesBox"
-                    class="chatMessages"
-                >
+            <ScrollContainer id="chatMessagesContainer" width="100%" height="calc(100% - 80px)" class="chatMessagesArea" vertical="true">
+                <VBox id="chatMessagesBox" class="chatMessages">
                     <!-- Chat messages will be added here dynamically -->
                 </VBox>
             </ScrollContainer>
 
             <!-- Input Box - Fixed at Bottom of Chat Section -->
-            <HBox
-                class="chatInputBox"
-                width="100%"
-                alignItems="Center"
-                renderType="Bare"
-                fitContainer="true"
-            >
-                <Input
-                    id="chatInput"
-                    class="chatInput"
-                    placeholder="Type your question here.."
-                    submit="onSubmitQuery"
-                    width="100%"
-                />
-                <Button
-                    icon="sap-icon://paper-plane"
-                    type="Emphasized"
-                    press="onSubmitQuery"
-                    class="chatSendButton"
-                />
+            <HBox class="chatInputBox" width="100%" alignItems="Center" renderType="Bare" fitContainer="true">
+                <Input id="chatInput" class="chatInput" placeholder="Type your question here.." submit="onSubmitQuery" width="100%" />
+                <Button icon="sap-icon://paper-plane" type="Emphasized" press="onSubmitQuery" class="chatSendButton" />
             </HBox>
         </l:VerticalLayout>
 
         <!-- Bottom Section -->
-        <l:VerticalLayout
-            width="100%"
-            class="bottomSection"
-        >
-            <Title
-                text="Code Result"
-                level="H4"
-                class="codeResultTitle"
-            />
-            <ScrollContainer
-                width="100%"
-                height="calc(100% - 40px)"
-                vertical="true"
-            >
+        <l:VerticalLayout width="100%" class="bottomSection">
+            <Title text="Code Result" level="H4" class="codeResultTitle" />
+            <ScrollContainer width="100%" height="calc(100% - 40px)" vertical="true">
                 <Text text="Bottom Section Content" />
             </ScrollContainer>
         </l:VerticalLayout>
