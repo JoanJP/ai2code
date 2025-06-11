@@ -4,10 +4,23 @@
         <Toolbar>
             <Title text="Context Tree" />
         </Toolbar>
-        <ScrollContainer height="100%" vertical="true" horizontal="false">
-            <Tree id="docTree" items="{ path: 'tree>/nodes', parameters: { arrayNames: ['children'] } }" itemPress=".onContextNodesSelect" mode="SingleSelectMaster">
-                <!-- each node rendered as a StandardTreeItem -->
-                <StandardTreeItem title="{tree>key}" type="Active"/>
+        <ScrollContainer
+            height="100%"
+            vertical="true"
+            horizontal="false"
+        >
+            <Tree
+                id="docTree"
+                items="{
+          path: 'tree>/nodes'
+        }"
+                itemPress="onTreeItemPress"
+                selectionChange="onTreeItemPress"
+            >
+                <StandardTreeItem
+                    title="{tree>label}"
+                    type="Active"
+                />
             </Tree>
         </ScrollContainer>
     </VBox>
